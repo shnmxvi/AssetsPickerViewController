@@ -43,17 +43,27 @@ open class AssetsManager: NSObject {
     
     fileprivate let imageManager = PHCachingImageManager()
     fileprivate var authorizationStatus = PHPhotoLibrary.authorizationStatus()
-    var subscribers = [AssetsManagerDelegate]()
     
-    fileprivate var albumMap = [String: PHAssetCollection]()
+    @ThreadSafe([])
+    var subscribers: [AssetsManagerDelegate]
     
-    var albumsFetchArray = [PHFetchResult<PHAssetCollection>]()
-    var fetchMap = [String: PHFetchResult<PHAsset>]()
+    @ThreadSafe([:])
+    fileprivate var albumMap: [String: PHAssetCollection]
+    
+    @ThreadSafe([])
+    var albumsFetchArray: [PHFetchResult<PHAssetCollection>]
+    
+    @ThreadSafe([:])
+    var fetchMap: [String: PHFetchResult<PHAsset>]
     
     /// stores originally fetched array
-    var fetchedAlbumsArray = [[PHAssetCollection]]()
+    @ThreadSafe([[]])
+    var fetchedAlbumsArray: [[PHAssetCollection]]
+    
     /// stores sorted array by applying user defined comparator, it's in decreasing order by count by default, and it might same as fetchedAlbumsArray if AssetsPickerConfig has  albumFetchOptions without albumComparator
-    var sortedAlbumsArray = [[PHAssetCollection]]()
+    @ThreadSafe([[]])
+    var sortedAlbumsArray: [[PHAssetCollection]]
+    
     internal(set) open var fetchResult: PHFetchResult<PHAsset>?
     
     fileprivate(set) open var defaultAlbum: PHAssetCollection?
