@@ -64,6 +64,7 @@ open class AssetsManager: NSObject {
     @ThreadSafe([[]])
     var sortedAlbumsArray: [[PHAssetCollection]]
     
+    @ThreadSafe(nil)
     internal(set) open var fetchResult: PHFetchResult<PHAsset>?
     
     fileprivate(set) open var defaultAlbum: PHAssetCollection?
